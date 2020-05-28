@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Валерия Василенко](https://up.htmlacademy.ru/javascript/20/user/126658).
-* Наставник: `Неизвестно`.
+* Наставник: [Даниил Царёв](https://htmlacademy.ru/profile/id945835).
 
 ---
 
