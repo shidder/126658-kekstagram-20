@@ -8,7 +8,7 @@ var COMMENTS_MAX = 5;
 var AVATAR_MIN = 1;
 var AVATAR_MAX = 6;
 
-var USERS_NAMES = [
+var USER_NAMES = [
   'Александр Сергеевич',
   'Лев Николаевич',
   'Иосиф Александрович',
@@ -16,7 +16,7 @@ var USERS_NAMES = [
   'Сергей Васильевич',
   'Николай Андреевич'
 ];
-var USERS_COMMENTS = [
+var USER_COMMENTS = [
   'Всё отлично!',
   'В целом всё неплохо. Но не всё.',
   'Когда вы делаете фотографию, хорошо бы убирать палец из кадра. В конце концов это просто непрофессионально.',
@@ -42,8 +42,8 @@ var getRandomElement = function (array) {
 var generateComment = function () {
   return {
     avatar: 'img/avatar' + getRandomNumber(AVATAR_MIN, AVATAR_MAX) + '.svg',
-    message: getRandomElement(USERS_COMMENTS),
-    name: getRandomElement(USERS_NAMES)
+    message: getRandomElement(USER_COMMENTS),
+    name: getRandomElement(USER_NAMES)
   };
 };
 
