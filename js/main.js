@@ -39,20 +39,16 @@ var getRandomElement = function (array) {
   return array[getRandomNumber(0, array.length - 1)];
 };
 
-var generateComment = function () {
-  return {
-    avatar: 'img/avatar' + getRandomNumber(AVATAR_MIN, AVATAR_MAX) + '.svg',
-    message: getRandomElement(USERS_COMMENTS),
-    name: getRandomElement(USERS_NAMES)
-  };
-};
-
 var generateComments = function (amount) {
   var comments = [];
   for (var i = 0; i <= amount; i++) {
-    comments.push(generateComment());
+    comments.push({
+      avatar: 'img/avatar' + getRandomNumber(AVATAR_MIN, AVATAR_MAX) + '.svg',
+      message: getRandomElement(USERS_COMMENTS),
+      name: getRandomElement(USERS_NAMES)
+    });
   }
-  return comments.length - 1;
+  return comments;
 };
 
 var generatePhotos = function (amount) {
@@ -71,7 +67,7 @@ var generatePhotos = function (amount) {
 var renderPhoto = function (photo) {
   var photoElement = photoTemplate.cloneNode(true);
   photoElement.querySelector('.picture__img').src = photo.url;
-  photoElement.querySelector('.picture__comments').textContent = photo.comments;
+  photoElement.querySelector('.picture__comments').textContent = photo.comments.length;
   photoElement.querySelector('.picture__likes').textContent = photo.likes;
   return photoElement;
 };
@@ -86,3 +82,114 @@ var renderPhotos = function (photos) {
 
 var photosArray = generatePhotos(PHOTOS_AMOUNT);
 photosContainer.appendChild(renderPhotos(photosArray));
+
+/*
+==========================================================================================================
+  Загрузка нового изображения на сайт
+ */
+
+var uploadFile = document.querySelector('#upload-file');
+var uploadCancel = document.querySelector('#upload-cancel');
+var setupForm = document.querySelector('.img-upload__overlay');
+var bodyElement = document.querySelector('body');
+
+uploadFile.addEventListener('change', function () {
+setupForm.classList.remove('hidden');
+bodyElement.classList.add('modal-open');
+  document.addEventListener('keydown', function (evt) {
+    if (evt.key === 'Escape') {
+      evt.preventDefault();
+      setupForm.classList.add('hidden');
+    }
+  });
+});
+
+uploadCancel.addEventListener('click', function () {
+  setupForm.classList.add('hidden');
+  bodyElement.classList.remove('modal-open');
+});
+
+/*
+==========================================================================================================
+ Редактирование размера изображения
+ */
+var scaleControlSmaller = document.querySelector('.scale__control--smaller');
+var scaleControlBigger = document.querySelector('.scale__control--bigger');
+var imagePreview = document.querySelector('.img-upload__preview img')
+var scaleValue = document.querySelector('.scale__control--value');
+
+var stepChange = 25;
+var currentValue = 100;
+var minValue = 25;
+var maxValue = 100;
+
+scaleValue.value= currentValue + '%';
+
+var decreaseScale = function () {
+  if (currentValue >= minValue + stepChange) {
+    currentValue -= stepChange;
+    imagePreview.style.transform = 'scale(' + (currentValue / 100) + ')';
+    scaleValue.value = currentValue + '%';
+  }
+}
+
+var increaseScale = function () {
+   if (currentValue <= maxValue - stepChange) {
+     currentValue += stepChange;
+    imagePreview.style.transform = 'scale(' + (currentValue / 100) + ')'
+    scaleValue.value = currentValue + '%';
+  }
+}
+
+scaleControlSmaller.addEventListener('click', function () {
+   decreaseScale();
+})
+
+scaleControlBigger.addEventListener('click', function () {
+  increaseScale();
+})
+
+/*
+==========================================================================================================
+ Применение эффекта для изображения
+ При смене эффекта, выбором одного из значений среди радиокнопок .effects__radio,
+  добавить картинке внутри .img-upload__preview CSS-класс,
+  соответствующий эффекту. Например, если выбран эффект .effect-chrome,
+  изображению нужно добавить класс effects__preview--chrome.
+ */
+
+var chromeEffect = document.querySelector('#effect-chrome');
+var sepiaEffect = document.querySelector('#effect-sepia');
+var marvinEffect = document.querySelector('#effect-marvin');
+var phobosEffect = document.querySelector('#effect-phobos');
+var heatEffect = document.querySelector('#effect-heat');
+
+chromeEffect.addEventListener('click', function () {
+   imagePreview.classList.add('effects__preview--chrome');
+  });
+
+sepiaEffect.addEventListener('click', function () {
+  imagePreview.classList.remove('effects__preview--chrome');
+  imagePreview.classList.add('effects__preview--sepia');
+});
+
+marvinEffect.addEventListener('click', function () {
+  imagePreview.classList.remove('effects__preview--chrome');
+  imagePreview.classList.remove('effects__preview--sepia');
+  imagePreview.classList.add('effects__preview--marvin');
+});
+
+phobosEffect.addEventListener('click', function () {
+  imagePreview.classList.remove('effects__preview--chrome');
+  imagePreview.classList.remove('effects__preview--sepia');
+  imagePreview.classList.remove('effects__preview--marvin');
+  imagePreview.classList.add('effects__preview--phobos');
+});
+
+heatEffect.addEventListener('click', function () {
+  imagePreview.classList.remove('effects__preview--chrome');
+  imagePreview.classList.remove('effects__preview--sepia');
+  imagePreview.classList.remove('effects__preview--marvin');
+  imagePreview.classList.remove('effects__preview--phobos');
+  imagePreview.classList.add('effects__preview--heat');
+});
