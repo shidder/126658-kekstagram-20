@@ -94,8 +94,8 @@ var setupForm = document.querySelector('.img-upload__overlay');
 var bodyElement = document.querySelector('body');
 
 uploadFile.addEventListener('change', function () {
-setupForm.classList.remove('hidden');
-bodyElement.classList.add('modal-open');
+  setupForm.classList.remove('hidden');
+  bodyElement.classList.add('modal-open');
   document.addEventListener('keydown', function (evt) {
     if (evt.key === 'Escape') {
       evt.preventDefault();
@@ -107,6 +107,7 @@ bodyElement.classList.add('modal-open');
 uploadCancel.addEventListener('click', function () {
   setupForm.classList.add('hidden');
   bodyElement.classList.remove('modal-open');
+  uploadFile.value = '';
 });
 
 /*
@@ -115,7 +116,7 @@ uploadCancel.addEventListener('click', function () {
  */
 var scaleControlSmaller = document.querySelector('.scale__control--smaller');
 var scaleControlBigger = document.querySelector('.scale__control--bigger');
-var imagePreview = document.querySelector('.img-upload__preview img')
+var imagePreview = document.querySelector('.img-upload__preview img');
 var scaleValue = document.querySelector('.scale__control--value');
 
 var stepChange = 25;
@@ -123,7 +124,7 @@ var currentValue = 100;
 var minValue = 25;
 var maxValue = 100;
 
-scaleValue.value= currentValue + '%';
+scaleValue.value = currentValue + '%';
 
 var decreaseScale = function () {
   if (currentValue >= minValue + stepChange) {
@@ -131,31 +132,27 @@ var decreaseScale = function () {
     imagePreview.style.transform = 'scale(' + (currentValue / 100) + ')';
     scaleValue.value = currentValue + '%';
   }
-}
+};
 
 var increaseScale = function () {
-   if (currentValue <= maxValue - stepChange) {
-     currentValue += stepChange;
-    imagePreview.style.transform = 'scale(' + (currentValue / 100) + ')'
+  if (currentValue <= maxValue - stepChange) {
+    currentValue += stepChange;
+    imagePreview.style.transform = 'scale(' + (currentValue / 100) + ')';
     scaleValue.value = currentValue + '%';
   }
-}
+};
 
 scaleControlSmaller.addEventListener('click', function () {
-   decreaseScale();
-})
+  decreaseScale();
+});
 
 scaleControlBigger.addEventListener('click', function () {
   increaseScale();
-})
+});
 
 /*
 ==========================================================================================================
  Применение эффекта для изображения
- При смене эффекта, выбором одного из значений среди радиокнопок .effects__radio,
-  добавить картинке внутри .img-upload__preview CSS-класс,
-  соответствующий эффекту. Например, если выбран эффект .effect-chrome,
-  изображению нужно добавить класс effects__preview--chrome.
  */
 
 var chromeEffect = document.querySelector('#effect-chrome');
@@ -163,33 +160,81 @@ var sepiaEffect = document.querySelector('#effect-sepia');
 var marvinEffect = document.querySelector('#effect-marvin');
 var phobosEffect = document.querySelector('#effect-phobos');
 var heatEffect = document.querySelector('#effect-heat');
+var noneEffect = document.querySelector('#effect-none');
+
+noneEffect.addEventListener('click', function () {
+  imagePreview.removeAttribute('class');
+  imagePreview.classList.add('effects__preview--none');
+});
 
 chromeEffect.addEventListener('click', function () {
-   imagePreview.classList.add('effects__preview--chrome');
-  });
+  imagePreview.removeAttribute('class');
+  imagePreview.classList.add('effects__preview--chrome');
+});
 
 sepiaEffect.addEventListener('click', function () {
-  imagePreview.classList.remove('effects__preview--chrome');
+  imagePreview.removeAttribute('class');
   imagePreview.classList.add('effects__preview--sepia');
 });
 
 marvinEffect.addEventListener('click', function () {
-  imagePreview.classList.remove('effects__preview--chrome');
-  imagePreview.classList.remove('effects__preview--sepia');
+  imagePreview.removeAttribute('class');
   imagePreview.classList.add('effects__preview--marvin');
 });
 
 phobosEffect.addEventListener('click', function () {
-  imagePreview.classList.remove('effects__preview--chrome');
-  imagePreview.classList.remove('effects__preview--sepia');
-  imagePreview.classList.remove('effects__preview--marvin');
+  imagePreview.removeAttribute('class');
   imagePreview.classList.add('effects__preview--phobos');
 });
 
 heatEffect.addEventListener('click', function () {
-  imagePreview.classList.remove('effects__preview--chrome');
-  imagePreview.classList.remove('effects__preview--sepia');
-  imagePreview.classList.remove('effects__preview--marvin');
-  imagePreview.classList.remove('effects__preview--phobos');
+  imagePreview.removeAttribute('class');
   imagePreview.classList.add('effects__preview--heat');
 });
+
+/*
+==========================================================================================================
+ Валидация хэш-тегов
+ */
+
+var hashTagInput = document.querySelector('.text__hashtags');
+
+var validateHashTags = function () {
+  hashTagInput.addEventListener('input', function () {
+    var hashTagValue = hashTagInput.value;
+    var MIN_TAG_LENGTH = 2;
+    var MAX_TAG_LENGTH = 20;
+    var regex = /^#[a-zа-яA-ZА-Я0-9]*$/;
+    var hashTagAmount = 5;
+    var hashTags = hashTagValue.split(' ');
+
+    var checkHashTagsRepeat = function (arr) {
+      for (var i = 0; i < arr.length; i++) {
+        for (var j = i + 1; j < arr.length; j++) {
+          if (arr[i] === arr[j]) {
+            return true;
+          }
+        }
+      }
+      return false;
+    };
+
+    for (var i = 0; i < hashTags.length; i++) {
+      if (!regex.test(hashTags[i])) {
+        hashTagInput.setCustomValidity('Введенный текст не соответствует формату');
+      } else if (hashTags.length > hashTagAmount) {
+        hashTagInput.setCustomValidity('Количество хэштегов не должно быть больше 5');
+      } else if (checkHashTagsRepeat(hashTags)) {
+        hashTagInput.setCustomValidity('Хэштеги не должны повторяться');
+      } else if (hashTagValue.length < MIN_TAG_LENGTH) {
+        hashTagInput.setCustomValidity('Длина хэштега не должна быть меньше 2 символов');
+      } else if (hashTagValue.length > MAX_TAG_LENGTH) {
+        hashTagInput.setCustomValidity('Длина хэштега не должна превышать 20 символов');
+      } else {
+        hashTagInput.setCustomValidity('');
+      }
+    }
+  });
+};
+
+validateHashTags();
