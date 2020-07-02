@@ -24,6 +24,15 @@
 
   renderPhotos(window.data.generatePhotos, photosContainer);
 
+
+  var submitButton = document.querySelector('.img-upload__submit');
+  submitButton.addEventListener('submit', function (evt) {
+    window.upload(new FormData(submitButton), function (/* response */) {
+      window.preview.setupForm.classList.add('hidden');
+    });
+    evt.preventDefault();
+  });
+
   window.picture = {
     renderPhotos: renderPhotos
   };
