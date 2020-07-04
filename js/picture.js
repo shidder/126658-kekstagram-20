@@ -2,6 +2,7 @@
 
 (function () {
   var photosContainer = document.querySelector('.pictures');
+  var fragment = document.createDocumentFragment();
 
   var renderPhoto = function (photo) {
     var photoTemplate = document.querySelector('#picture')
@@ -14,26 +15,12 @@
     return photoElement;
   };
 
-  var renderPhotos = function (photos, place) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < photos.length - 1; i++) {
+  var successHandler = function (photos) {
+    for (var i = 0; i < 25; i++) {
       fragment.appendChild(renderPhoto(photos[i]));
     }
-    place.appendChild(fragment);
+    photosContainer.appendChild(fragment);
   };
 
-  renderPhotos(window.data.generatePhotos, photosContainer);
-
-
-  var submitButton = document.querySelector('.img-upload__submit');
-  submitButton.addEventListener('submit', function (evt) {
-    window.upload(new FormData(submitButton), function (/* response */) {
-      window.preview.setupForm.classList.add('hidden');
-    });
-    evt.preventDefault();
-  });
-
-  window.picture = {
-    renderPhotos: renderPhotos
-  };
+  window.load(successHandler);
 })();
