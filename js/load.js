@@ -12,7 +12,7 @@
   var load = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = RESPONSE_TYPE;
-
+    xhr.timeout = TIMEOUT_IN_MS;
     xhr.addEventListener('load', function () {
       if (xhr.status === STATUS_CODE.OK) {
         onSuccess(xhr.response);
@@ -24,10 +24,10 @@
       onError('Произошла ошибка соединения');
     });
     xhr.addEventListener('timeout', function () {
-      onError('Запрос не успел выполниться за ' + xhr.timeout + 'мс');
+      onError('Запрос не успел выполниться за ' + TIMEOUT_IN_MS + 'мс');
     });
 
-    xhr.timeout = TIMEOUT_IN_MS; // 10s
+
 
     xhr.open(LOAD_METHOD, URL);
     xhr.send();
