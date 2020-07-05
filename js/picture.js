@@ -1,8 +1,9 @@
 'use strict';
 
 (function () {
-  var photosContainer = document.querySelector('.pictures');
 
+  var photosContainer = document.querySelector('.pictures');
+  var fragment = document.createDocumentFragment();
   var renderPhoto = function (photo) {
     var photoTemplate = document.querySelector('#picture')
       .content
@@ -14,17 +15,15 @@
     return photoElement;
   };
 
-  var renderPhotos = function (photos, place) {
-    var fragment = document.createDocumentFragment();
-    for (var i = 0; i < photos.length - 1; i++) {
+  var renderPhotos = function (photos) {
+
+    for (var i = 0; i < photos.length; i++) {
       fragment.appendChild(renderPhoto(photos[i]));
     }
-    place.appendChild(fragment);
+    photosContainer.appendChild(fragment);
   };
 
-  renderPhotos(window.data.generatePhotos, photosContainer);
-
-  window.picture = {
-    renderPhotos: renderPhotos
+   window.picture = {
+    renderPhotos: renderPhotos,
   };
 })();

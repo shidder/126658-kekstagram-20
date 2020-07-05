@@ -61,7 +61,8 @@
     increaseScale();
   });
 
-  window.upload = {
-    imagePreview: imagePreview
+  window.preview = {
+    imagePreview: imagePreview,
+    setupForm: setupForm
   };
 })();
