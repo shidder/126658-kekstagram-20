@@ -27,8 +27,6 @@
       onError('Запрос не успел выполниться за ' + TIMEOUT_IN_MS + 'мс');
     });
 
-
-
     xhr.open(LOAD_METHOD, URL);
     xhr.send();
   };
