@@ -1,15 +1,23 @@
 'use strict';
 
 (function () {
-  var URL = 'https://javascript.pages.academy/kekstagram/data';
+  var URL = {
+    LOAD: 'https://javascript.pages.academy/kekstagram/data',
+    UPLOAD: 'https://javascript.pages.academy/kekstagram'
+  };
+
   var TIMEOUT_IN_MS = 10000;
   var RESPONSE_TYPE = 'json';
-  var LOAD_METHOD = 'GET';
+  var METHOD = {
+    GET: 'GET',
+    POST: 'POST'
+  };
+
   var STATUS_CODE = {
     OK: 200
   };
 
-  var load = function (onSuccess, onError) {
+  var makeRequest = function (onSuccess, onError) {
     var xhr = new XMLHttpRequest();
     xhr.responseType = RESPONSE_TYPE;
     xhr.timeout = TIMEOUT_IN_MS;
@@ -26,12 +34,19 @@
     xhr.addEventListener('timeout', function () {
       onError('Запрос не успел выполниться за ' + TIMEOUT_IN_MS + 'мс');
     });
-
-    xhr.open(LOAD_METHOD, URL);
-    xhr.send();
+    return xhr;
   };
 
   window.load = {
-    download: load
+    load: function (onSuccess, onError) {
+      var xhr = makeRequest(onSuccess, onError);
+      xhr.open(METHOD.GET, URL.LOAD);
+      xhr.send();
+    },
+    upload: function (data, onSuccess, onError) {
+      var xhr = makeRequest(onSuccess, onError);
+      xhr.open(METHOD.POST, URL.UPLOAD);
+      xhr.send(data);
+    }
   };
 })();

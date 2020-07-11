@@ -9,8 +9,15 @@
     return array[getRandomNumber(0, array.length - 1)];
   };
 
+  var pressEscape = function (evt, callback) {
+    if (evt.key === 'Escape') {
+      callback();
+    }
+  };
+
   window.util = {
     getRandomNumber: getRandomNumber,
-    getRandomElement: getRandomElement
+    getRandomElement: getRandomElement,
+    pressEscape: pressEscape
   };
 })();
