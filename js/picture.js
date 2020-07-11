@@ -23,7 +23,7 @@
     photosContainer.appendChild(fragment);
   };
 
-   window.picture = {
+  window.picture = {
     renderPhotos: renderPhotos,
   };
 })();

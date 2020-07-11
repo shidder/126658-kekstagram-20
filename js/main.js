@@ -1,5 +1,5 @@
 'use strict';
 
 (function () {
-  window.load.download(window.picture.renderPhotos);
+  window.load.load(window.picture.renderPhotos);
 })();
