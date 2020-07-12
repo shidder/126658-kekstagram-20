@@ -77,7 +77,7 @@
     });
   };
 
-   window.picture = {
+    window.picture = {
     renderPhotos: renderPhotos,
   };
 })();
