@@ -40,9 +40,24 @@
       }
     });
   };
-  validateHashTags();
+
+  var textComments = document.querySelector('.text__description');
+  var validateComments = function () {
+    textComments.addEventListener('input', function () {
+      var MAX_LENGTH = 140;
+      var textCommentsValue = textComments.value;
+      if (textCommentsValue.length === MAX_LENGTH) {
+        textComments.setCustomValidity('Вы ввели максимальное допустимое количество символов');
+      } if (textCommentsValue.length > MAX_LENGTH) {
+        textComments.setCustomValidity('Удалите лишние ' + (textCommentsValue.length - MAX_LENGTH) + ' симв.');
+      } else {
+        textComments.setCustomValidity('');
+      }
+    });
+  };
 
   window.validation = {
-    validate: validateHashTags
+    validateHashTags: validateHashTags,
+    validateComments: validateComments
   };
 })();
