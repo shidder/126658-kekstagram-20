@@ -6,6 +6,8 @@
   var uploadCancel = document.querySelector('#upload-cancel');
   var setupForm = document.querySelector('.img-upload__overlay');
   var bodyElement = document.querySelector('body');
+  var hashTagInput = document.querySelector('.text__hashtags');
+  var textComments = document.querySelector('.text__description');
 
   var openSetupForm = function () {
     setupForm.classList.remove('hidden');
@@ -24,9 +26,10 @@
   var closeFormEscape = function (evt) {
     if (evt.key === 'Escape') {
       evt.preventDefault();
-      closeSetupForm();
-      resetFormData();
-      document.removeEventListener('keydown', closeFormEscape);
+      if (hashTagInput !== document.activeElement && textComments !== document.activeElement) {
+        closeSetupForm();
+        resetFormData();
+      }
     }
   };
 
@@ -109,5 +112,6 @@
   uploadForm.addEventListener('submit', function (evt) {
     evt.preventDefault();
     window.load.upload(new FormData(uploadForm), onSuccess, showErrorMessage);
+
   });
 })();
