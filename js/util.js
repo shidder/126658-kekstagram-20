@@ -1,6 +1,10 @@
 'use strict';
 
 (function () {
+  var KEY_CODE = {
+    ESC: 'Escape'
+  };
+
   var getRandomNumber = function (min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
   };
@@ -10,14 +14,25 @@
   };
 
   var pressEscape = function (evt, callback) {
-    if (evt.key === 'Escape') {
+    if (evt.key === KEY_CODE.ESC) {
       callback();
     }
+  };
+
+  var shuffleArray = function (array) {
+    for (var i = array.length - 1; i > 0; i--) {
+      var j = Math.floor(Math.random() * (i + 1));
+      var temporaryValue = array[j];
+      array[j] = array[i];
+      array[i] = temporaryValue;
+    }
+    return array;
   };
 
   window.util = {
     getRandomNumber: getRandomNumber,
     getRandomElement: getRandomElement,
-    pressEscape: pressEscape
+    pressEscape: pressEscape,
+    shuffleArray: shuffleArray
   };
 })();

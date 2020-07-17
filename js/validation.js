@@ -1,6 +1,8 @@
 'use strict';
 
 (function () {
+  var MAX_LENGTH = 140;
+
   var hashTagInput = document.querySelector('.text__hashtags');
 
   var validateHashTags = function () {
@@ -44,7 +46,6 @@
   var textComments = document.querySelector('.text__description');
   var validateComments = function () {
     textComments.addEventListener('input', function () {
-      var MAX_LENGTH = 140;
       var textCommentsValue = textComments.value;
       if (textCommentsValue.length === MAX_LENGTH) {
         textComments.setCustomValidity('Вы ввели максимальное допустимое количество символов');
