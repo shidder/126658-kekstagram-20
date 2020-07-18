@@ -44,9 +44,9 @@
     var clickedButton = evt.target;
     var activeButton = imageFilters.querySelector('.img-filters__button--active');
     activeButton.classList.remove('img-filters__button--active');
-    clickedButton.classList.add('img-filters__button--active');    
+    clickedButton.classList.add('img-filters__button--active');
     imageFiltersMap[clickedButton.id](photosData);
-};
+  };
 
   var showFilters = function () {
     imageFilters.classList.remove('img-filters--inactive');
