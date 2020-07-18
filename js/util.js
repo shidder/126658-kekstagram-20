@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var KEY_CODE = {
+  var Key = {
     ESC: 'Escape'
   };
 
@@ -14,7 +14,7 @@
   };
 
   var pressEscape = function (evt, callback) {
-    if (evt.key === KEY_CODE.ESC) {
+    if (evt.key === Key.ESC) {
       callback();
     }
   };
