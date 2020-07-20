@@ -24,7 +24,7 @@
   };
 
   var closeFormEscape = function (evt) {
-    if (evt.key === 'Escape') {
+    if (evt.key === window.util.Key.ESC) {
       evt.preventDefault();
       if (hashTagInput !== document.activeElement && textComments !== document.activeElement) {
         closeSetupForm();
@@ -64,9 +64,7 @@
     };
 
     var pressSuccessPopupEscape = function (evt) {
-      if (evt.key === 'Escape') {
-        closeSuccessMessagePopup();
-      }
+      window.util.pressEscape(evt, closeSuccessMessagePopup);
     };
 
     successMessagePopup.addEventListener('click', clickSuccessButton);
@@ -98,9 +96,7 @@
     };
 
     var pressErrorPopupEscape = function (evt) {
-      if (evt.key === 'Escape') {
-        closeErrorMessagePopup();
-      }
+      window.util.pressEscape(evt, closeErrorMessagePopup);
     };
 
     errorMessagePopup.addEventListener('click', clickErrorButton);

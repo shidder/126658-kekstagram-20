@@ -71,7 +71,7 @@
     showNextComments();
     openBigPhoto();
     document.addEventListener('keydown', function (evt) {
-      window.util.pressEsc(evt, closeBigPhoto());
+      window.util.pressEscape(evt, closeBigPhoto);
     });
   };
 

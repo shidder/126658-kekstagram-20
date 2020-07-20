@@ -33,6 +33,7 @@
     getRandomNumber: getRandomNumber,
     getRandomElement: getRandomElement,
     pressEscape: pressEscape,
-    shuffleArray: shuffleArray
+    shuffleArray: shuffleArray,
+    Key: Key
   };
 })();
