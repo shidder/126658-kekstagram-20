@@ -6,6 +6,15 @@
   var MIN_VALUE = 25;
   var MAX_VALUE = 100;
 
+  var Effect = {
+    CHROME: 'chrome',
+    SEPIA: 'sepia',
+    MARVIN: 'marvin',
+    PHOBOS: 'phobos',
+    HEAT: 'heat',
+    NONE: 'none'
+  };
+
   var scaleControlSmaller = document.querySelector('.scale__control--smaller');
   var scaleControlBigger = document.querySelector('.scale__control--bigger');
   var imagePreview = document.querySelector('.img-upload__preview img');
@@ -15,15 +24,6 @@
   var effectLine = document.querySelector('.effect-level__line');
   var effectLevelDepth = document.querySelector('.effect-level__depth');
   var effectsList = document.querySelector('.effects__list');
-
-  var Effect = {
-    CHROME: 'chrome',
-    SEPIA: 'sepia',
-    MARVIN: 'marvin',
-    PHOBOS: 'phobos',
-    HEAT: 'heat',
-    NONE: 'none'
-  };
 
   scaleValue.value = CURRENT_VALUE + '%';
 

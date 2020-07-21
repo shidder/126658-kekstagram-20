@@ -36,6 +36,9 @@
         hashTagInput.setCustomValidity('');
       }
     }
+    if (hashTagValue.length === 0) {
+      hashTagInput.setCustomValidity('');
+    }
   };
 
   var textComments = document.querySelector('.text__description');
